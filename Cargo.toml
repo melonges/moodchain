@@ -1,0 +1,8 @@
+[package]
+name = "moodchain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = "1.0.152"
+sha2 = "0.10.6"
