@@ -30,7 +30,6 @@ impl Block {
     }
 
     fn hash(index: u32, prev_hash: BlockHash, timestamp: UnixTimeStamp, data: &str) -> BlockHash {
-        // TODO make normal hashing
         let mut hasher = Sha256::new();
         hasher.update(format!("{index}{prev_hash}{timestamp}{data}").as_bytes());
         BlockHash::from_slice(hasher.finalize().as_slice())
