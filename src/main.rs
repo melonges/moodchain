@@ -4,6 +4,7 @@ use std::str::FromStr;
 use block::Block;
 
 use crate::types::BlockHash;
+mod communication;
 mod types;
 mod utils;
 fn main() {
