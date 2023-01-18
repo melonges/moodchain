@@ -1,9 +1,8 @@
+use crate::types::{BlockHash, UnixTimeStamp};
 use chrono::{DateTime, Utc};
 use sha2::{Digest, Sha256};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-type BlockHash = u128;
-type UnixTimeStamp = u32;
 #[derive(PartialEq)]
 pub struct Block {
     pub index: u32,
@@ -30,14 +29,11 @@ impl Block {
         }
     }
 
-    fn hash(
-        index: u32,
-        prev_hash: BlockHash,
-        timestamp: UnixTimeStamp,
-        data: &String,
-    ) -> BlockHash {
+    fn hash(index: u32, prev_hash: BlockHash, timestamp: UnixTimeStamp, data: &str) -> BlockHash {
         // TODO make normal hashing
-        (prev_hash ^ (timestamp + index) as BlockHash)
+        let mut hasher = Sha256::new();
+        hasher.update(format!("{index}{prev_hash}{timestamp}{data}").as_bytes());
+        BlockHash::from_slice(hasher.finalize().as_slice())
     }
 
     pub fn validate_new_block(new_block: &Block, prev_block: &Block) -> bool {
