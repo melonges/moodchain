@@ -18,5 +18,4 @@ fn main() {
         .unwrap(),
     };
     let blockchain = vec![genesis_block];
-    println!("Hello, world!");
 }
