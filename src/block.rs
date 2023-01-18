@@ -4,7 +4,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 type BlockHash = u128;
 type UnixTimeStamp = u32;
-
+#[derive(PartialEq)]
 pub struct Block {
     pub index: u32,
     pub hash: BlockHash,
@@ -40,7 +40,7 @@ impl Block {
         (prev_hash ^ (timestamp + index) as BlockHash)
     }
 
-    fn validate_new_block(new_block: Block, prev_block: Block) -> bool {
+    pub fn validate_new_block(new_block: &Block, prev_block: &Block) -> bool {
         if prev_block.index + 1 != new_block.index {
             return false;
         } else if prev_block.hash != new_block.prev_hash {
