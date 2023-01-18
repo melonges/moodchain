@@ -49,6 +49,6 @@ impl Block {
         {
             return false;
         }
-        true
+       return true;
     }
 }
