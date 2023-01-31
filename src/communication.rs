@@ -1,15 +1,7 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{HttpResponse, Responder};
 
-#[get("/blocks")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body()
-}
+use crate::block::Block;
 
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
-
-async fn manual_hello() -> impl Responder {
+async fn get_blockchain(blockchain: &Vec<Block>) -> impl Responder {
     HttpResponse::Ok().body("Hey there!")
 }

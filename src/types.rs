@@ -1,3 +1,2 @@
-use primitive_types::H256;
-pub type BlockHash = H256;
+pub type BlockHash = String; // h256 needed
 pub type UnixTimeStamp = u32;

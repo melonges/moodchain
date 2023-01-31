@@ -6,6 +6,6 @@ edition = "2021"
 [dependencies]
 chrono = "0.4.23"
 primitive-types = "0.12.1"
-serde = "1.0.152"
 sha2 = "0.10.6"
 actix-web = "4"
+serde = {version = "1.0.152", features = ["derive"]}
