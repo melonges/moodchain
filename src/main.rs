@@ -1,15 +1,25 @@
 mod block;
-use std::str::FromStr;
+use std::{env, str::FromStr};
 
 use actix_web::{web, App, HttpServer};
 use block::Block;
+use communication::{get_blockchain, mine};
 use primitive_types::H256;
+use types::{Blockchain, SharedState};
 
 use crate::types::BlockHash;
 mod communication;
 mod types;
 mod utils;
-fn main() {
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    dotenv::dotenv().expect("cant parse env");
+    let addr = env::var("BIND_ADDRESS").expect("expect BIND_ADDRESS");
+    let port: u16 = env::var("PORT")
+        .expect("expect PORT")
+        .parse()
+        .unwrap_or(8080);
+
     let genesis_block = Block {
         index: 0,
         prev_hash: H256::from_low_u64_le(0u64).to_string(),
@@ -20,5 +30,14 @@ fn main() {
         )
         .unwrap(),
     };
-    let blockchain = vec![genesis_block];
+
+    let blockchain = web::Data::new(vec![genesis_block]);
+    HttpServer::new(move || {
+        App::new()
+            .app_data(blockchain.clone())
+            .service(get_blockchain)
+    })
+    .bind((addr, port))?
+    .run()
+    .await
 }
