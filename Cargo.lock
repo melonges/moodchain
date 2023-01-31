@@ -847,6 +847,7 @@ dependencies = [
  "chrono",
  "primitive-types",
  "serde",
+ "serde_json",
  "sha2",
 ]
 

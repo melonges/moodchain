@@ -39,11 +39,11 @@ impl Block {
         hasher.update(format!("{index}{prev_hash}{timestamp}{data}"));
         format!("{:x}", hasher.finalize())
     }
-    pub fn validate_new_block(new_block: &Block, prev_block: &Block) -> bool {
+    pub fn validate_new_block(new_block: &Block, prev_block: &Block) -> Result<(), &'static str> {
         if prev_block.index + 1 != new_block.index {
-            return false;
+            return Err("incorrect index");
         } else if prev_block.hash != new_block.prev_hash {
-            return false;
+            return Err("incorrect prev hash");
         } else if Block::hash(
             new_block.index,
             &new_block.hash,
@@ -51,8 +51,8 @@ impl Block {
             &new_block.data,
         ) != new_block.hash
         {
-            return false;
+            return Err("incorrect block hash");
         }
-        return true;
+        return Ok(());
     }
 }

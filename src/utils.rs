@@ -4,13 +4,13 @@ pub fn is_valid_chain(blockchain_to_validate: &[Block], genesis_block: Block) ->
     if blockchain_to_validate[0] != genesis_block {
         return false;
     }
-
     for i in 1..blockchain_to_validate.len() {
-        if Block::validate_new_block(&blockchain_to_validate[i], &blockchain_to_validate[i - 1]) {
+        if let Err(_) =
+            Block::validate_new_block(&blockchain_to_validate[i], &blockchain_to_validate[i - 1])
+        {
             return false;
         }
     }
-
     true
 }
 
